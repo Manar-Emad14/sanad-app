@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { Capacitor } from '@capacitor/core'
 import { AppProvider, useApp } from './context/AppContext'
 import { Header } from './components/Header'
 import { Navigation } from './components/Navigation'
@@ -14,6 +16,8 @@ import { DevSpiritualToolsModal } from './components/DevSpiritualToolsModal'
 import { DeveloperSuggestionModal } from './components/DeveloperSuggestionModal'
 import { UserProfileModal } from './components/UserProfileModal'
 import { SmartInstallBanner } from './components/SmartInstallBanner'
+import { UpdateModal } from './components/UpdateModal'
+import { checkForUpdate, type UpdateInfo } from './services/updateChecker'
 
 import { DashboardView } from './views/DashboardView'
 import { QuranView } from './views/QuranView'
@@ -33,6 +37,25 @@ function MainContent() {
     isSuggestionModalOpen,
     setIsSuggestionModalOpen,
   } = useApp()
+
+  const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+
+  // In-app update checker for native Android / iOS platform on mount
+  useEffect(() => {
+    if (Capacitor.isNativePlatform()) {
+      checkForUpdate()
+        .then((info) => {
+          if (info && info.hasUpdate) {
+            setUpdateInfo(info)
+            setIsUpdateModalOpen(true)
+          }
+        })
+        .catch((err) => {
+          console.warn('[App] Update check failed silently:', err)
+        })
+    }
+  }, [])
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -106,6 +129,13 @@ function MainContent() {
 
       {/* User Profile & Personalization Modal */}
       <UserProfileModal />
+
+      {/* In-App Native Update Checker Modal */}
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        updateInfo={updateInfo}
+      />
 
       {/* Footer Branding & Attribution */}
       <Footer />
