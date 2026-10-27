@@ -1,6 +1,8 @@
 import React from 'react'
+import { Capacitor } from '@capacitor/core'
 import { useApp } from '../context/AppContext'
 import { PwaInstallModal } from './PwaInstallModal'
+import appIcon from '../assets/app-icon.png'
 import {
   Sparkles,
   Sunrise,
@@ -41,6 +43,7 @@ export const Header: React.FC = () => {
   } = useApp()
 
   const isAr = lang === 'ar'
+  const isNative = Capacitor.isNativePlatform()
   const nextPrayerName = isAr
     ? prayerStatus.nextPrayerName.ar
     : prayerStatus.nextPrayerName.en
@@ -56,7 +59,7 @@ export const Header: React.FC = () => {
             <div className="relative group flex-shrink-0 cursor-pointer">
               <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl p-0.5 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-900 border border-emerald-400/40 shadow-sm shadow-emerald-950/20 group-hover:scale-105 group-hover:border-emerald-300 transition-all duration-300 flex items-center justify-center">
                 <img
-                  src="/logo.svg?v=2"
+                  src={appIcon}
                   alt="تطبيق سند المُبرمج | Sanad Dev"
                   className="w-7 h-7 sm:w-9 sm:h-9 object-contain rounded-lg sm:rounded-xl"
                 />
@@ -198,8 +201,8 @@ export const Header: React.FC = () => {
               )}
             </button>
 
-            {/* PWA Install Button (Shown if not standalone) */}
-            {!isStandalone && (
+            {/* PWA Install Button (Shown if not standalone and not native) */}
+            {!isStandalone && !isNative && (
               <button
                 onClick={promptInstall}
                 type="button"
@@ -244,7 +247,7 @@ export const Header: React.FC = () => {
 
           {/* Quick status/notification button on mobile header right */}
           <div className="sm:hidden flex items-center gap-1.5 flex-shrink-0">
-            {!isStandalone && (
+            {!isStandalone && !isNative && (
               <button
                 onClick={promptInstall}
                 type="button"
@@ -325,7 +328,7 @@ export const Header: React.FC = () => {
             <User className="w-3.5 h-3.5" />
           </button>
 
-          {!isStandalone && (
+          {!isStandalone && !isNative && (
             <button
               onClick={promptInstall}
               type="button"

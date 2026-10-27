@@ -1,6 +1,8 @@
 import React from 'react'
 import { Download, X, Smartphone, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Capacitor } from '@capacitor/core'
 import { useApp } from '../context/AppContext'
+import appIcon from '../assets/app-icon.png'
 
 export const SmartInstallBanner: React.FC = () => {
   const {
@@ -12,10 +14,11 @@ export const SmartInstallBanner: React.FC = () => {
   } = useApp()
 
   const isAr = lang === 'ar'
+  const isNative = Capacitor.isNativePlatform()
 
-  // Do not show banner if the app is already installed/running in standalone mode
-  // or if user previously dismissed it
-  if (isStandalone || isInstallBannerDismissed) {
+  // Do not show banner if running natively as Android/iOS APK,
+  // or if already running in standalone PWA mode, or if user dismissed it
+  if (isNative || isStandalone || isInstallBannerDismissed) {
     return null
   }
 
@@ -50,7 +53,7 @@ export const SmartInstallBanner: React.FC = () => {
           {/* App Branded Icon */}
           <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-900 border border-emerald-400/40 flex-shrink-0 flex items-center justify-center shadow-md shadow-emerald-950/30">
             <img
-              src="/icon-192.png"
+              src={appIcon}
               alt="Sanad Dev Logo"
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg object-contain"
               onError={(e) => {

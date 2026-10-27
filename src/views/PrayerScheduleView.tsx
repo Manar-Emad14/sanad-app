@@ -20,6 +20,7 @@ import {
   Bell,
   Square,
   Music,
+  ChevronDown,
 } from 'lucide-react'
 import { Prayer } from 'adhan'
 import { formatTime } from '../utils/prayer'
@@ -294,66 +295,86 @@ export const PrayerScheduleView: React.FC = () => {
       </div>
 
       {/* Muezzin / Adhan Voice Selection Card */}
-      <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="flex items-center gap-3 w-full sm:w-auto min-w-0">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
-            <Music className="w-4 h-4" />
-          </div>
-          <div className="min-w-0">
-            <h4 className="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5 truncate">
-              <span>{isAr ? 'صوت الأذان المفضل للمواقيت' : 'Preferred Adhan Sound'}</span>
-              <span className="text-[10px] px-2 py-0.2 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-semibold font-mono">
-                {isAr ? 'مخزن أوفلاين' : 'Offline Ready'}
-              </span>
-            </h4>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
-              {isAr
-                ? 'الحرم المكي، المسجد النبوي، التلفزيون المصري، أو المسجد الأقصى'
-                : 'Makkah, Madinah, Egyptian TV, or Al-Aqsa Mosque'}
-            </p>
+      <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+        {/* Card Header */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
+              <Music className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">
+                  {isAr ? 'صوت الأذان المفضل للمواقيت' : 'Preferred Adhan Sound'}
+                </h4>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-semibold font-mono flex-shrink-0">
+                  {isAr ? 'مخزن أوفلاين' : 'Offline Ready'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                {isAr
+                  ? 'أذان الشيخ محمد رفعت، الحرم المكي، المسجد النبوي، أو المسجد الأقصى'
+                  : 'Sheikh Refaat (Cairo TV), Makkah, Madinah, or Al-Aqsa'}
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-          <select
-            value={notificationSettings.adhanAudioOption}
-            onChange={(e) => {
-              const val = e.target.value as AdhanAudioOption
-              setNotificationSettings({ ...notificationSettings, adhanAudioOption: val })
-              localStorage.setItem('sanad_adhan_audio_option', val)
-            }}
-            className="flex-1 sm:flex-initial bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer focus:outline-hidden focus:ring-1 focus:ring-emerald-500 max-w-full truncate"
-            aria-label={isAr ? 'اختيار صوت المؤذن' : 'Select Muezzin'}
-          >
-            {ADHAN_OPTIONS_LIST.map((opt) => (
-              <option key={opt.id} value={opt.id}>
-                {isAr ? opt.labelAr : opt.labelEn}
-              </option>
-            ))}
-          </select>
+        {/* Full-width Dropdown Selector */}
+        <div className="w-full space-y-3">
+          <div className="relative w-full">
+            <select
+              value={notificationSettings.adhanAudioOption}
+              onChange={(e) => {
+                const val = e.target.value as AdhanAudioOption
+                setNotificationSettings({ ...notificationSettings, adhanAudioOption: val })
+                localStorage.setItem('sanad_adhan_audio_option', val)
+              }}
+              className="w-full bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 text-xs sm:text-sm font-bold px-4 py-3 pe-10 rounded-xl border border-slate-300 dark:border-slate-700 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-emerald-500/50 appearance-none transition-colors"
+              aria-label={isAr ? 'اختيار صوت المؤذن' : 'Select Muezzin'}
+            >
+              {ADHAN_OPTIONS_LIST.map((opt) => (
+                <option key={opt.id} value={opt.id} className="py-1">
+                  {isAr ? `${opt.labelAr} - ${opt.subAr}` : `${opt.labelEn} - ${opt.subEn}`}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-4 text-slate-400">
+              <ChevronDown className="w-4 h-4" />
+            </div>
+          </div>
 
-          <button
-            type="button"
-            onClick={handleTestSound}
-            className={`px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs flex-shrink-0 ${
-              isPlayingTestSound
-                ? 'bg-rose-600 text-white animate-pulse'
-                : 'bg-emerald-600 hover:bg-emerald-500 text-white'
-            }`}
-            title={isPlayingTestSound ? (isAr ? 'إيقاف الصوت' : 'Stop') : (isAr ? 'معاينة الصوت المختار' : 'Preview')}
-          >
-            {isPlayingTestSound ? (
-              <>
-                <Square className="w-3.5 h-3.5 fill-current" />
-                <span className="hidden sm:inline">{isAr ? 'إيقاف' : 'Stop'}</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5 fill-current" />
-                <span>{isAr ? 'استماع ومعاينة' : 'Preview'}</span>
-              </>
-            )}
-          </button>
+          {/* Action Row Below Dropdown */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 pt-1 border-t border-slate-100 dark:border-slate-800/80">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400">
+              {isAr
+                ? 'يعمل الأذان بصوت المؤذن المختار تلقائياً عند حلول موعد الصلاة'
+                : 'Plays selected Adhan audio automatically at prayer times'}
+            </span>
+
+            <button
+              type="button"
+              onClick={handleTestSound}
+              className={`w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shadow-xs flex-shrink-0 ${
+                isPlayingTestSound
+                  ? 'bg-rose-600 hover:bg-rose-500 text-white animate-pulse shadow-rose-600/25'
+                  : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/25'
+              }`}
+              title={isPlayingTestSound ? (isAr ? 'إيقاف الصوت' : 'Stop') : (isAr ? 'معاينة الصوت المختار' : 'Preview')}
+            >
+              {isPlayingTestSound ? (
+                <>
+                  <Square className="w-3.5 h-3.5 fill-current" />
+                  <span>{isAr ? 'إيقاف الأذان' : 'Stop Adhan'}</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  <span>{isAr ? 'استماع ومعاينة' : 'Preview'}</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
