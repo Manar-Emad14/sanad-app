@@ -1,0 +1,63 @@
+import type { NavigationTab } from '../types'
+
+export const TABS: NavigationTab[] = [
+  {
+    id: 'dashboard',
+    nameAr: 'الرئيسية',
+    nameEn: 'Home / Dashboard',
+    descriptionAr: 'نظرة عامة على أداء المطور والأوراد اليومية',
+    descriptionEn: 'Developer performance overview and daily deeds',
+    iconName: 'Home',
+  },
+  {
+    id: 'quran',
+    nameAr: 'المصحف الشريف',
+    nameEn: 'Holy Quran',
+    descriptionAr: 'قراءة واستماع لجميع سور القرآن الكريم بدون إنترنت',
+    descriptionEn: 'Offline reading & recitation for all 114 Surahs',
+    iconName: 'BookOpen',
+    badge: '114',
+  },
+  {
+    id: 'prayer-schedule',
+    nameAr: 'جدول الصلاة',
+    nameEn: 'Prayer Schedule',
+    descriptionAr: 'مواقيت الصلاة، القبلة، وأوقات قيام الليل في القاهرة',
+    descriptionEn: 'Prayer times, Qibla azimuth, and Sunnah night hours',
+    iconName: 'Clock',
+  },
+  {
+    id: 'pomodoro',
+    nameAr: 'بومودورو إيماني',
+    nameEn: 'Spiritual Pomodoro',
+    descriptionAr: 'جلسات تركيز برمجية تتخللها فواصل الذكر والتسبيح',
+    descriptionEn: 'Coding sprint intervals with mindful remembrance breaks',
+    iconName: 'Timer',
+    badge: '25/5',
+  },
+  {
+    id: 'challenges',
+    nameAr: 'كود وتحديات',
+    nameEn: 'Code & Debug Games',
+    descriptionAr: 'مسائل برمجية وتحديات خوارزمية بقيم إسلامية',
+    descriptionEn: 'Code puzzles, bug fixing & algorithmic challenges',
+    iconName: 'Code2',
+    badge: 'New',
+  },
+  {
+    id: 'achievements',
+    nameAr: 'إنجازاتي',
+    nameEn: 'Git Matrix & Deeds',
+    descriptionAr: 'سجل مساهمات Git وأوراد الذكر والصلاة في جماعة',
+    descriptionEn: 'Git commit heatmap and daily spiritual check-ins',
+    iconName: 'Trophy',
+  },
+  {
+    id: 'admin',
+    nameAr: 'لوحة التحكم',
+    nameEn: 'Admin Panel',
+    descriptionAr: 'إعدادات النظام وتخصيص تنبيهات الأذان',
+    descriptionEn: 'System settings, overrides & prayer notifications',
+    iconName: 'ShieldCheck',
+  },
+]

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="100%" height="100%">
+  <defs>
+    <!-- Dark Emerald Background Gradient -->
+    <linearGradient id="sanadEmeraldBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Mint-Green Gradient for Coding Brackets -->
+    <linearGradient id="sanadMintGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a7f3d0" />
+      <stop offset="50%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+
+    <!-- Golden Accent for Crescent & Slash -->
+    <linearGradient id="sanadGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+
+  <!-- Premium Squircle Background -->
+  <rect width="256" height="256" rx="58" fill="url(#sanadEmeraldBg)" />
+
+  <!-- Subtle Crisp Inner Border -->
+  <rect x="7" y="7" width="242" height="242" rx="51" fill="none" stroke="#34d399" stroke-opacity="0.25" stroke-width="2.5" />
+
+  <!-- Golden Crescent Moon Outline (Intertwined) -->
+  <path
+    d="M 152 46 C 90 58 52 110 52 136 C 52 186 92 216 156 216 C 172 216 186 212 196 206 C 130 198 92 164 92 132 C 92 98 120 62 176 50 C 168 47 160 46 152 46 Z"
+    fill="#fbbf24"
+    fill-opacity="0.16"
+    stroke="#fbbf24"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Crisp Modern Mint Coding Brackets < / > -->
+  <!-- Left Bracket < -->
+  <path
+    d="M 108 100 L 74 132 L 108 164"
+    fill="none"
+    stroke="url(#sanadMintGrad)"
+    stroke-width="16"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Golden Slash / -->
+  <line
+    x1="138"
+    y1="92"
+    x2="118"
+    y2="172"
+    stroke="url(#sanadGoldGrad)"
+    stroke-width="15"
+    stroke-linecap="round"
+  />
+
+  <!-- Right Bracket > -->
+  <path
+    d="M 148 100 L 182 132 L 148 164"
+    fill="none"
+    stroke="url(#sanadMintGrad)"
+    stroke-width="16"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Spiritual Guiding Star Accent -->
+  <circle cx="182" cy="74" r="5" fill="#fde68a" />
+</svg>
